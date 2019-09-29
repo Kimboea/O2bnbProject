@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chat">
+	<!-- 1. 채팅방 존재하는지 확인 -->
+	<select id="chat_room_dto" parameterType="String" resultType="ch_room_dto">
+		select *
+		from o2_chat_room
+		where room_name = #{room_name}
+	</select>
+	
+	<!-- 2. 채팅방 만들기 -->
+	<insert id="chat_room_in" parameterType="String">
+		insert into o2_chat_room
+		values(#{room_name}, 2, 1, null)
+	</insert>
+	
+	<!-- 3. 채팅방 리스트 불러오기 -->
+	<select id="chat_room_list" parameterType="HashMap" resultType="ch_room_dto">
+		select 
+			o1.*, 
+			o2.new_content_cnt
+		from
+			o2_chat_room o1,
+			(select a.room_name, nvl(cnt, '0') new_content_cnt
+			 from (select 
+						room_name 
+		           from (select o.*,
+		                        substr(room_name, 0, instr(room_name,'-')-1) as host_id,
+		                        substr(room_name, instr(room_name,'-')+1) as user_id
+		                 from o2_chat_room o
+		                 where validity = 1
+		                 and (exit_id is null or exit_id != #{id})
+		                 )
+		           where 1=1
+		           <if test='user_type!=null and user_type.equals("1")'>
+		           and user_id = #{id}
+		           </if>
+				   <if test='user_type!=null and user_type.equals("2")'>
+		           and host_id = #{id}
+		           </if>
+				  ) a,
+				  (select 
+						room_name, 
+						count(*) cnt
+			 	   from o2_chat_content
+			 	   where (read_ch != #{id} and read_ch != 'all')
+			 	   group by room_name
+             	  ) b
+			 where a.room_name = b.room_name(+)
+			) o2
+		where o1.room_name = o2.room_name
+	</select>
+	
+	<!-- 4. 채팅방 내용 인설트 -->
+	<insert id="chat_con_in" parameterType="ch_con_dto">
+		insert into o2_chat_content
+		values(ch_con_seq.nextval, #{writer}, #{content}, sysdate, #{ip}, null, #{read_ch}, #{room_name})
+	</insert>
+	
+	<!-- 5. 채팅방 내용 불러오기 -->
+	<select id="chat_con_list" parameterType="HashMap" resultType="ch_con_dto">
+		select * 
+		from o2_chat_content
+		where room_name = #{room_name}
+		and (del_ch is null or (del_ch != #{id} and del_ch != 'all'))
+		order by num
+	</select>
+	
+	<!-- 6. 채팅방 삭제 : 한사람이라도 남아 있는 경우 정보만 변경 -->
+	<update id="chat_room_per_dec" parameterType="HashMap">
+		update o2_chat_room
+		set person = person-1, exit_id = #{id}
+		where room_name = #{room_name}
+	</update>
+	
+	<!-- 7. 채팅방 삭제 : 둘다 나갔을 경우 아예 삭제 -->
+	<update id="chat_room_val_update" parameterType="String">
+		update o2_chat_room
+		set validity = '0', person = person-1, exit_id = 'all'
+		where room_name = #{room_name}
+	</update>
+	
+	<update id="chat_con_del_ch_update" parameterType="HashMap">
+		update o2_chat_content
+		set del_ch = #{del_ch}
+		where room_name = #{room_name}
+		and (del_ch is null or del_ch != 'all')
+	</update>
+	
+	<!-- 8. 채팅방 재생성1 -->
+	<update id="chat_room_per_inc" parameterType="String">
+		update o2_chat_room
+		set person = person+1, exit_id = null
+		where room_name = #{room_name}
+	</update>
+	
+	<!-- 9. 채팅방 재생성2 -->
+	<update id="chat_room_re_in" parameterType="String">
+		update o2_chat_room
+		set validity = '1', person = 2, exit_id = null
+		where room_name = #{room_name}
+	</update>
+	
+	<!-- 10. 채팅방 내용 읽음 확인 여부  -->
+	<update id="chat_con_read_ch" parameterType="HashMap">
+		update o2_chat_content
+		set read_ch = 'all'
+		where (read_ch != #{id} and read_ch != 'all')
+		and room_name = #{room_name}
+	</update>
+	
+	<!-- 11. 채팅방 내용 읽음 확인 갯수 출력 -->
+	<select id="chat_con_new_cnt" parameterType="HashMap" resultType="String">
+		select count(*)
+		from o2_chat_content
+		where (read_ch != #{id} and read_ch != 'all')
+		and room_name = #{room_name}
+	</select>
+</mapper>

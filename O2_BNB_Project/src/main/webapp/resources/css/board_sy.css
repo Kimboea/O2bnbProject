@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&display=swap&subset=korean');
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.text {
+	position: relative;
+	float: left;
+}
+
+.price_tag {
+	position: absolute;
+    right: 0;
+    top: 75%;
+    background-color: #BDBDBD;
+    color: white;
+    font-size: 20pt;
+    border-radius: 5px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.o2bnb_search{
+	display: none;
+}
+
+.theme, .person_cnt, .price, .col-sm-9 { display: none;}
+
+.font{
+font-family: 'Noto Sans KR', sans-serif;
+}
+
+.lightFont{
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: bold;	
+}
+
+.dateTimePicker	{ font-size: 15px; width: 160px; }
+.check { width: 50px; height: 30%;}
+
+.btn { zoom: 0.7; }
+.light{ font-weight: light;}
+
+.boldweight { font-weight: bold;}
+
+.back { 
+	background-color: #fffefc;
+	border-radius: 20px;
+ }
+ 
+.price {
+ 	background-color: black;
+ 	border-radius: 5px;
+ 	color : #484848;
+ 	padding: 10px;
+ }
+ 
+ .contentprice {
+ 	background-color: #ff5a5f;
+ 	border-radius: 5px;
+ 	color : white;
+ 	padding: 10px;
+ }
+ 
+ 
+.filebox label { 
+display: inline-block; 
+padding: .3em .50em; 
+font-size: inherit; 
+line-height: normal; 
+vertical-align: middle; 
+background-color:#008489;
+cursor: pointer; 
+border: 1px solid #ebebeb; 
+border-bottom-color: #e2e2e2; 
+border-radius: .25em; 
+color: white;
+} 
+.filebox input[type="file"] {
+ /* 파일 필드 숨기기 */ 
+ position: absolute; 
+ width: 1px; 
+ height: 1px; 
+ padding: 0; 
+ margin: -1px; 
+ overflow: hidden; 
+ clip:rect(0,0,0,0); 
+ border: 0; 
+ }
+ 
+ /* 댓글등록버튼 */
+ .insert_btn {
+display: inline-block; 
+padding: .5em .75em; 
+font-size: inherit; 
+line-height: normal; 
+vertical-align: middle; 
+background-color:#c2c2c2;
+cursor: pointer; 
+border: 1px solid #ebebeb; 
+border-bottom-color: #e2e2e2; 
+border-radius: .25em; 
+color: white;
+font-weight: bold;
+font-size: 12pt;
+} 
+
+#board_list_search_form {
+	text-align: center;
+} 
+
+#board_list_search_form #search_btn {
+	background-color: white;
+	color : #484848;
+	border: 1px solid #484848;
+	border-radius : 5px;
+	height: 34px;
+	width: 80px;
+}
+#board_list_search_form #search_btn:hover {
+	background-color : #ff5a5f;
+	color : white;
+	border: 1px solid #484848;
+	border-radius : 5px;
+	height: 34px;
+	width: 80px;
+}
+
+.o2bnb_search .o2bnb_sel span a{
+	font-family: 'Noto Sans KR', sans-serif;
+	text-decoration : none;
+	font-weight: 500;
+	color : #484848;
+}
+
+.o2bnb_search .o2bnb_sel span a:hover{
+	font-family: 'Noto Sans KR', sans-serif;
+	text-decoration : none;
+	font-weight: 700;
+	color :  #008489;
+}
+
+span.irs-min,span.irs-max {
+	display: none;
+}
+
+/* 
+.text {
+	position: relative;
+	float: left;
+}
+
+
+.o2bnb_search{
+	display: none;
+}
+
+.theme, .person_cnt, .price, .col-sm-9 { display: none;}
+  */
+
+a#paybtn{
+	font-family: 'Noto Sans KR', sans-serif;
+	border : 1px solid #484848;
+	border-radius : 5px;
+	padding : 0 20px 0 20px;
+	text-decoration : none;
+	color : #484848;
+	margin-left: 20px;
+}
+a#paybtn:hover {
+	font-family: 'Noto Sans KR', sans-serif;
+	text-decoration : none;
+	border : 1px solid #484848;
+	border-radius : 5px;
+	font-weight: 500;
+	padding :  0 20px 0 20px;
+	color : #ff5a5f;
+	margin-left: 20px;
+}
+
+#pay_content_div {
+	font-family: 'Noto Sans KR', sans-serif;
+	position: absolute;
+    top: 25%;
+    bottom: 0;
+    left: 30%;
+    right: 0;
+}
