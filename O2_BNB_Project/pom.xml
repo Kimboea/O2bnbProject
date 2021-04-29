@@ -6,7 +6,9 @@
   <packaging>war</packaging>
   
     <properties>
+<<<<<<< HEAD
 		<!-- Generic properties Original -->
+>>>>>>> 59fb3f3357f33805287bb15e645903bdcf0ad664
 		<!-- Generic properties -->
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
